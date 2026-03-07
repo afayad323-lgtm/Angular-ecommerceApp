@@ -1,0 +1,36 @@
+<h1>total price is: {{ totalPrice }}</h1>
+<div class="mb-3">
+  <label for="" class="form-label">cateogries</label>
+  <select name="" id="" class="form-select form-select-lg" [(ngModel)]="selectedCatId">
+    <option value="">All</option>
+    <option [value]="cateogry.id" *ngFor="let cateogry of categeories">{{ cateogry.name }}</option>
+  </select>
+</div>
+<div class="row row-cols-1 row-cols-md-2 g-4">
+  <div
+    class="col"
+    *ngFor="let product of products"
+    [class.d-none]="selectedCatId && product.catId != selectedCatId"
+  >
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{ product.name }}</h5>
+        <div [ngSwitch]="product.quantity">
+          <p *ngSwitchCase="0">out of stock</p>
+          <p *ngSwitchCase="1" class="text-danger">last item</p>
+          <p *ngSwitchCase="2">last 2 items</p>
+          <p *ngSwitchDefault>{{ product.quantity }}</p>
+        </div>
+        <p class="card-text">{{ product.price }}</p>
+        <input type="number" #count>
+        <button
+          class="btn btn-success"
+          (click)="changeQuantity(product,count)"
+          [disabled]="product.quantity == 0"
+        >
+          buy
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
