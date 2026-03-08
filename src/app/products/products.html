@@ -11,21 +11,32 @@
     class="col"
     *ngFor="let product of products"
     [class.d-none]="selectedCatId && product.catId != selectedCatId"
+    
   >
-    <div class="card">
+    <div class="card" appHilightCard [quantity]="product.quantity"]>
       <div class="card-body">
         <h5 class="card-title">{{ product.name }}</h5>
-        <div [ngSwitch]="product.quantity">
-          <p *ngSwitchCase="0">out of stock</p>
-          <p *ngSwitchCase="1" class="text-danger">last item</p>
-          <p *ngSwitchCase="2">last 2 items</p>
-          <p *ngSwitchDefault>{{ product.quantity }}</p>
-        </div>
-        <p class="card-text">{{ product.price }}</p>
-        <input type="number" #count>
+
+        @switch (product.quantity) {
+          @case (0) {
+            <p>Quantity: out of stock</p>
+          }
+          @case (1) {
+            <p class="text-danger">Quantity: last item</p>
+          }
+          @case (2) {
+            <p>Quantity: last 2 items</p>
+          }
+          @default {
+            <p>Quantity: {{ product.quantity }}</p>
+          }
+        }
+        <p class="card-text">{{ product.price | currency: 'EGP ' : 'symbol' }}</p>
+        <p>Price after discount is: {{ product.price | discount: 20 }}</p>
+        <input type="number" #count />
         <button
           class="btn btn-success"
-          (click)="changeQuantity(product,count)"
+          (click)="changeQuantity(product, count)"
           [disabled]="product.quantity == 0"
         >
           buy

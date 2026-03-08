@@ -3,10 +3,12 @@ import { Iproducts } from '../models/iproducts';
 import { Icateogries } from '../models/icateogries';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { DiscountPipe } from '../pipes/discount-pipe';
+import { HilightCard } from '../directives/hilight-card';
 
 @Component({
   selector: 'app-products',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, DiscountPipe, HilightCard, HilightCard],
   templateUrl: './products.html',
   styleUrl: './products.css',
 })
