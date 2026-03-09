@@ -1,22 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { Iproducts } from '../models/iproducts';
-import { Icateogries } from '../models/icateogries';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { DiscountPipe } from '../pipes/discount-pipe';
 import { HilightCard } from '../directives/hilight-card';
 
 @Component({
   selector: 'app-products',
-  imports: [FormsModule, CommonModule, DiscountPipe, HilightCard, HilightCard],
+  standalone: true,
+  imports: [FormsModule, CommonModule, HilightCard],
   templateUrl: './products.html',
   styleUrl: './products.css',
 })
-export class Products {
+export class Products implements OnChanges {
   products: Iproducts[];
-  categeories: Icateogries[];
-  selectedCatId: number | null = null;
+  filteredProducts: Iproducts[] = [];
   totalPrice: number = 0;
+  @Output() onTotalPriceChanged: EventEmitter<number>;
+  @Input() receivedCatId: number = 0;
 
   constructor() {
     this.products = [
@@ -69,19 +69,29 @@ export class Products {
         catId: 3,
       },
     ];
-    this.categeories = [
-      { id: 1, name: 'laptops' },
-      { id: 2, name: 'mobile' },
-      { id: 3, name: 'tablets' },
-    ];
+    this.onTotalPriceChanged = new EventEmitter<number>();
   }
+  ngOnChanges() {
+    this.filterProducts();
+  }
+
   changeQuantity(product: Iproducts, count: HTMLInputElement) {
     const num = Number(count.value);
 
     if (num <= product.quantity && num > 0) {
       product.quantity -= num;
       this.totalPrice += product.price * num;
+      this.onTotalPriceChanged.emit(this.totalPrice);
       count.value = '';
+    }
+  }
+  filterProducts() {
+    if (this.receivedCatId === 0) {
+      this.filteredProducts = this.products;
+    } else {
+      this.filteredProducts = this.products.filter(
+        (pro) => pro.catId === Number(this.receivedCatId),
+      );
     }
   }
 }

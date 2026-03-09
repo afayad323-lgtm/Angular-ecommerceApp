@@ -1,0 +1,15 @@
+<h1>Total Price {{ receivedTotalPrice }}</h1>
+<div class="mb-3">
+  <label class="form-label">categories</label>
+  <select class="form-select form-select-lg" [(ngModel)]="selectedCatId">
+    <option [ngValue]="0">All</option>
+    <option *ngFor="let cateogry of categeories" [ngValue]="cateogry.id">
+      {{ cateogry.name }}
+    </option>
+  </select>
+</div>
+
+<app-products
+  [receivedCatId]="selectedCatId"
+  (onTotalPriceChanged)="calTotalPrice($event)"
+></app-products>
