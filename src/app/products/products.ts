@@ -3,6 +3,7 @@ import { Iproducts } from '../models/iproducts';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HilightCard } from '../directives/hilight-card';
+import { StaticProducts } from '../services/static-products';
 
 @Component({
   selector: 'app-products',
@@ -15,64 +16,15 @@ export class Products implements OnChanges {
   products: Iproducts[];
   filteredProducts: Iproducts[] = [];
   totalPrice: number = 0;
-  @Output() onTotalPriceChanged: EventEmitter<number>;
+  @Output() onTotalPriceChanged = new EventEmitter<number>();
   @Input() receivedCatId: number = 0;
 
-  constructor() {
-    this.products = [
-      {
-        id: 100,
-        name: 'Dell laptop',
-        price: 5000,
-        quantity: 3,
-
-        catId: 1,
-      },
-      {
-        id: 200,
-        name: 'Lenovo laptop',
-        price: 6000,
-        quantity: 5,
-
-        catId: 1,
-      },
-      {
-        id: 300,
-        name: 'iphone',
-        price: 50000,
-        quantity: 1,
-
-        catId: 2,
-      },
-      {
-        id: 400,
-        name: 'oppo',
-        price: 50005,
-        quantity: 3,
-
-        catId: 2,
-      },
-      {
-        id: 500,
-        name: 'samsung tablet',
-        price: 5000,
-        quantity: 2,
-
-        catId: 3,
-      },
-      {
-        id: 600,
-        name: 'xaomi tablet',
-        price: 2000,
-        quantity: 0,
-
-        catId: 3,
-      },
-    ];
-    this.onTotalPriceChanged = new EventEmitter<number>();
+  constructor(private _staticProducts: StaticProducts) {
+    this.products = _staticProducts.getAllProducts();
+    this.filteredProducts = this.products;
   }
   ngOnChanges() {
-    this.filterProducts();
+    this.filteredProducts = this._staticProducts.getProductsByCatId(this.receivedCatId);
   }
 
   changeQuantity(product: Iproducts, count: HTMLInputElement) {
@@ -83,15 +35,6 @@ export class Products implements OnChanges {
       this.totalPrice += product.price * num;
       this.onTotalPriceChanged.emit(this.totalPrice);
       count.value = '';
-    }
-  }
-  filterProducts() {
-    if (this.receivedCatId === 0) {
-      this.filteredProducts = this.products;
-    } else {
-      this.filteredProducts = this.products.filter(
-        (pro) => pro.catId === Number(this.receivedCatId),
-      );
     }
   }
 }
