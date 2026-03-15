@@ -21,11 +21,17 @@
         <p class="card-text">{{ product.price | currency: 'EGP ' : 'symbol' }}</p>
         <input type="number" #count />
         <button
-          class="btn btn-success"
+          class="btn btn-success mx-3"
           (click)="changeQuantity(product, count)"
           [disabled]="product.quantity == 0"
         >
           buy
+        </button>
+        <!-- <button class="btn btn-success mx-3" [routerLink]="['/details', product.id]">
+          Details
+        </button> -->
+        <button class="btn btn-success mx-3" (click)="navigateToDetails(product.id)">
+          Details
         </button>
       </div>
     </div>
