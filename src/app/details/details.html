@@ -1,3 +1,12 @@
 <h1>{{ product?.name }}</h1>
 <h1>{{ product?.price }}</h1>
-<h1>{{product?.quantity}}</h1>
+<h1>{{ product?.quantity }}</h1>
+<button class="btn btn-primary" (click)="goBack()">Back</button>
+<button class="btn btn-danger" (click)="previous()" [disabled]="currentId == idsArray[0]">
+  previous
+</button>
+<button
+  class="btn btn-success"
+  (click)="next()"
+  [disabled]="currentId == idsArray[idsArray.length - 1]"
+>Next</button>

@@ -75,4 +75,8 @@ export class StaticProducts {
     const product = this.products.find((pro) => pro.id == id);
     return product ? product : null;
   }
+
+  mapProductToIds(): number[] {
+    return this.products.map((pro) => pro.id);
+  }
 }

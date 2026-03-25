@@ -1,0 +1,67 @@
+{
+  "products": [
+    {
+      "id": "100",
+      "name": "Dell Laptop",
+      "price": 5000,
+      "quantity": 3,
+      "imgurl": "images/513fG2LYvIL._AC_SY300_SX300_QL70_ML2_.jpg",
+      "catId": 1
+    },
+    {
+      "id": "200",
+      "name": "Lenovo laptop",
+      "price": 6000,
+      "quantity": 5,
+      "imgurl": "images/513fG2LYvIL._AC_SY300_SX300_QL70_ML2_.jpg",
+      "catId": 1
+    },
+    {
+      "id": "300",
+      "name": "iphone",
+      "price": 50000,
+      "quantity": 1,
+      "imgurl": "images/513fG2LYvIL._AC_SY300_SX300_QL70_ML2_.jpg",
+      "catId": 2
+    },
+    {
+      "id": "400",
+      "name": "oppo",
+      "price": 50005,
+      "quantity": 3,
+      "imgurl": "images/513fG2LYvIL._AC_SY300_SX300_QL70_ML2_.jpg",
+      "catId": 2
+    },
+    {
+      "id": "500",
+      "name": "samsung tablet",
+      "price": 5000,
+      "quantity": 2,
+      "imgurl": "images/513fG2LYvIL._AC_SY300_SX300_QL70_ML2_.jpg",
+      "catId": 3
+    },
+    {
+      "id": "600",
+      "name": "xaomi tablet",
+      "price": 2000,
+      "quantity": 0,
+      "imgurl": "images/513fG2LYvIL._AC_SY300_SX300_QL70_ML2_.jpg",
+      "catId": 3
+    }
+  ],
+  "cateogries": [
+    {
+      "id": "1",
+      "name": "laptops"
+    },
+    {
+      "id": "2",
+      "name": "mobile"
+    },
+    {
+      "id": "3",
+      "name": "tablets"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
