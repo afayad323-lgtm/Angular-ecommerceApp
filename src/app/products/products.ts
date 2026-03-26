@@ -75,4 +75,19 @@ export class Products implements OnChanges, OnInit {
   navigateToDetails(id: number) {
     this._router.navigateByUrl(`/details/${id}`);
   }
+
+  editProduct(id: number) {
+    this._router.navigateByUrl(`/edit/${id}`);
+  }
+  deleteProduct(id: number) {
+    this._apiProducts.deleteProductById(id).subscribe({
+      next: () => {
+        this.products = this.filteredProducts.filter((p) => p.id !== id);
+        this.filteredProducts = this.products;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
 }

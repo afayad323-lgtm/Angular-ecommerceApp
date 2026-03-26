@@ -6,9 +6,13 @@ import { NotFound } from './not-found/not-found';
 import { Details } from './details/details';
 import { Vision } from './vision/vision';
 import { Values } from './values/values';
+import { AddProduct } from './add-product/add-product';
+import { EditProduct } from './edit-product/edit-product';
 
 export const routes: Routes = [
   { path: 'home', component: Order },
+  { path: 'add', component: AddProduct },
+  { path: 'edit/:id', component: EditProduct },
   {
     path: 'aboutUs',
     component: AboutUs,
