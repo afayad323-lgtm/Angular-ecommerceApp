@@ -1,4 +1,3 @@
-<h1>Total Price: {{ receivedTotalPrice }}</h1>
 <div class="mb-3">
   <label class="form-label">categories</label>
   <select class="form-select form-select-lg" [(ngModel)]="selectedCatId">
@@ -9,7 +8,4 @@
   </select>
 </div>
 
-<app-products
-  [receivedCatId]="selectedCatId"
-  (onTotalPriceChanged)="calTotalPrice($event)"
-></app-products>
+<app-products [receivedCatId]="selectedCatId"></app-products>

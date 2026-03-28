@@ -14,11 +14,13 @@ import { HilightCard } from '../directives/hilight-card';
 import { StaticProducts } from '../services/static-products';
 import { Router, RouterLink } from '@angular/router';
 import { ApiProduct } from '../services/api-product';
+import { Cart } from '../services/cart';
+import { ProductService } from '../services/product-service';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [FormsModule, CommonModule, HilightCard, RouterLink],
+  imports: [FormsModule, CommonModule, HilightCard],
   templateUrl: './products.html',
   styleUrl: './products.css',
 })
@@ -34,6 +36,8 @@ export class Products implements OnChanges, OnInit {
     private _router: Router,
     private _apiProducts: ApiProduct,
     private _cdr: ChangeDetectorRef,
+    private _cart: Cart,
+    private _productService: ProductService,
   ) {
     // this.products = _staticProducts.getAllProducts();
   }
@@ -50,15 +54,19 @@ export class Products implements OnChanges, OnInit {
     this.filterProducts();
   }
   ngOnInit(): void {
+    this._productService.products$.subscribe((res) => {
+      this.products = res;
+      this.filterProducts()
+    });
+  }
+  getProducts() {
     this._apiProducts.getAllProducts().subscribe({
       next: (res) => {
         this.products = res;
         this.filterProducts();
         this._cdr.detectChanges();
       },
-      error: (err) => {
-        console.log(err);
-      },
+      error: (err) => console.log(err),
     });
   }
 
@@ -66,9 +74,10 @@ export class Products implements OnChanges, OnInit {
     const num = Number(count.value);
 
     if (num <= product.quantity && num > 0) {
-      product.quantity -= num;
-      this.totalPrice += product.price * num;
-      this.onTotalPriceChanged.emit(this.totalPrice);
+      this._cart.addToCart(product, num);
+
+      this._productService.updateQuantity(product.id, num);
+
       count.value = '';
     }
   }
@@ -80,14 +89,6 @@ export class Products implements OnChanges, OnInit {
     this._router.navigateByUrl(`/edit/${id}`);
   }
   deleteProduct(id: number) {
-    this._apiProducts.deleteProductById(id).subscribe({
-      next: () => {
-        this.products = this.filteredProducts.filter((p) => p.id !== id);
-        this.filteredProducts = this.products;
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    this._productService.deleteProduct(id);
   }
 }

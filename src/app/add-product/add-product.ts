@@ -28,6 +28,7 @@ export class AddProduct {
   }
 
   addedProduct() {
+    this.newProduct.catId = Number(this.newProduct.catId);
     this._apiProduct.addProduct(this.newProduct).subscribe({
       next: (res) => {
         alert('Done');

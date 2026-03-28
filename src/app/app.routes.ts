@@ -8,8 +8,11 @@ import { Vision } from './vision/vision';
 import { Values } from './values/values';
 import { AddProduct } from './add-product/add-product';
 import { EditProduct } from './edit-product/edit-product';
+import { CartComponent } from './cart-component/cart-component';
 
 export const routes: Routes = [
+  { path: '', component: Order },
+  { path: 'cart', component: CartComponent },
   { path: 'home', component: Order },
   { path: 'add', component: AddProduct },
   { path: 'edit/:id', component: EditProduct },

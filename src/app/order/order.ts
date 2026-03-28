@@ -22,7 +22,5 @@ export class Order {
       { id: 3, name: 'tablets' },
     ];
   }
-  calTotalPrice(top: number) {
-    this.receivedTotalPrice = top;
-  }
+ 
 }
